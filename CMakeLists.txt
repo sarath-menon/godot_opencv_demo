@@ -1,11 +1,13 @@
-cmake_minimum_required(VERSION 3.0.0)
-project(cv_godot_demo VERSION 0.1.0)
+cmake_minimum_required(VERSION 3.16)
+project(godot_opencv_demo VERSION 0.1.0)
+set(CMAKE_CXX_STANDARD 20)
 
-include(CTest)
-enable_testing()
+# Find requirements
+find_package(fastcdr REQUIRED)
+find_package(fastrtps REQUIRED)
+find_package(OpenCV REQUIRED)
 
-add_executable(cv_godot_demo main.cpp)
 
-set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-include(CPack)
+add_subdirectory(lib)
+add_subdirectory(app)
+
