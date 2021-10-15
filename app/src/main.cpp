@@ -10,7 +10,16 @@ int main() {
   constexpr static int cols = 1080;
   constexpr static int img_size = rows * cols * 3;
 
+  // Create opencv matrix of same diension as imahe, CV_8UC3 means 8 bit
+  // unsigned characeter, 3 channels (RGB)
   cv::Mat frame = cv::Mat(rows, cols, CV_8UC3);
+
+  // Set aruco marker type
+  cv::Ptr<cv::aruco::Dictionary> dictionary =
+      cv::aruco::getPredefinedDictionary(cv::aruco::DICT_4X4_50);
+
+  // Class object
+  ArucoFunctions detector;
 
   for (;;) {
 
@@ -25,11 +34,18 @@ int main() {
 
     // Godot image is RGB. Opencv uses BGR, sol reverse array
     cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
-    cv::imshow("Sim Vision", frame);
+
+    // Detect aruco markers in image
+    frame = detector.DetectArucoMarker(frame, dictionary);
+
+    // Show image in window
+    cv::imshow("Marker Detector", frame);
+
+    // Show image for 1 ms, detect keypress
     int c = cv::waitKey(1);
 
-    // Shut down upon keypress
-    if (c != -1) {
+    // Shut down upon pressing any key
+    if (c > 0) {
       cv::destroyAllWindows();
       exit(EXIT_SUCCESS);
     }
