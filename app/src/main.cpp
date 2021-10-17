@@ -2,8 +2,11 @@
 
 int main() {
 
-  // Create subscriber with msg type
-  DDSSubscriber img_sub(ImageHDPubSubType(), "sim_img");
+  DefaultParticipant dp(0, "opencv_demo_qos");
+
+  // Create subscri
+  // Create subscriber with msg type DDSSubscriber
+  DDSSubscriber img_sub(ImageHDPubSubType(), "sim_img", dp.participant());
   img_sub.init();
 
   constexpr static int rows = 720;

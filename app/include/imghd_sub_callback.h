@@ -3,9 +3,10 @@
 ImageHD st;
 bool new_data{false};
 
-inline void DDSSubscriber::SubListener::on_data_available(DataReader *reader) {
-  SampleInfo info;
-
+inline void DDSSubscriber::SubListener::on_data_available(
+    eprosima::fastdds::dds::DataReader *reader) {
+  eprosima::fastdds::dds::SampleInfo info;
+dds:
   if (reader->take_next_sample(&st, &info) == ReturnCode_t::RETCODE_OK) {
     if (info.valid_data) {
       // Protection against race condition using mutex

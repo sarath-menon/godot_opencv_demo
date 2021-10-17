@@ -1,5 +1,6 @@
 #pragma once
 
+#include "default_participant.h"
 #include "default_subscriber.h"
 #include "imghd_sub_callback.h"
 #include "sensor_msgs/msgs/ImageHd.h"
