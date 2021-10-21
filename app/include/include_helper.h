@@ -1,8 +1,8 @@
 #pragma once
 
-#include "default_participant.h"
 #include "default_subscriber.h"
 #include "imghd_sub_callback.h"
+#include "large_data_participant.h"
 #include "sensor_msgs/msgs/ImageHd.h"
 
 // C++ native

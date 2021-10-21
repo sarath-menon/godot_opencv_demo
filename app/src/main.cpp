@@ -2,7 +2,7 @@
 
 int main() {
 
-  DefaultParticipant dp(0, "opencv_demo_qos");
+  LargeDataParticipant dp(0, "opencv_demo_qos");
 
   // Create subscri
   // Create subscriber with msg type DDSSubscriber
@@ -26,14 +26,8 @@ int main() {
 
   for (;;) {
 
-    { // wait for the subscriber
-      std::unique_lock<std::mutex> lk(img_sub.listener.m);
-      img_sub.listener.cv.wait(lk, [] { return new_data; });
-      new_data = false;
-
-      // Move data from C++ array to OpenCV matrix
-      std::memcpy(frame.data, st.frame().data(), img_size);
-    }
+    // Wait for new data
+    img_sub.listener.wait_for_data();
 
     // Godot image is RGB. Opencv uses BGR, sol reverse array
     cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
@@ -48,7 +42,7 @@ int main() {
     int c = cv::waitKey(1);
 
     // Shut down upon pressing any key
-    if (c > 0) {
+    if (c != -1) {
       cv::destroyAllWindows();
       exit(EXIT_SUCCESS);
     }

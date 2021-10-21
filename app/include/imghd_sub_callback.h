@@ -13,7 +13,7 @@ dds:
       std::unique_lock<std::mutex> lock(m);
 
       // Print your structure data here.
-      ++samples;
+      // ++samples;
       // std::cout << "Sample received, count=" << samples << std::endl;
 
       new_data = true;
