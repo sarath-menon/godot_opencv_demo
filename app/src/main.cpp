@@ -10,7 +10,7 @@ int main() {
   img_sub.init();
 
   constexpr static int rows = 720;
-  constexpr static int cols = 1080;
+  constexpr static int cols = 1280;
   constexpr static int img_size = rows * cols * 3;
 
   // Create opencv matrix of same diension as imahe, CV_8UC3 means 8 bit
@@ -28,6 +28,9 @@ int main() {
 
     // Wait for new data
     img_sub.listener.wait_for_data();
+
+    // Move data from C++ array to OpenCV matrix
+    std::memcpy(frame.data, st.frame().data(), img_size);
 
     // Godot image is RGB. Opencv uses BGR, sol reverse array
     cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
